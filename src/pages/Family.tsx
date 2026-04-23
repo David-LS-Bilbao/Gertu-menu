@@ -356,8 +356,49 @@ const Family = () => {
                   <div>
                     <p className="font-semibold">{m.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {m.role} · ración {m.ration}
+                      {m.role}
+                      {typeof m.age === "number" ? ` · ${m.age} años` : ""}
+                      {` · ración ${m.ration}`}
                     </p>
+                    {(m.diets?.length ||
+                      m.allergens?.length ||
+                      m.intolerances?.length ||
+                      m.conditions?.length) ? (
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {m.diets?.map((d) => (
+                          <span
+                            key={`d-${d}`}
+                            className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary"
+                          >
+                            {d}
+                          </span>
+                        ))}
+                        {m.allergens?.map((a) => (
+                          <span
+                            key={`a-${a}`}
+                            className="rounded-full bg-destructive/10 px-2 py-0.5 text-[11px] font-medium text-destructive"
+                          >
+                            Alergia: {a}
+                          </span>
+                        ))}
+                        {m.intolerances?.map((i) => (
+                          <span
+                            key={`i-${i}`}
+                            className="rounded-full bg-accent/40 px-2 py-0.5 text-[11px] font-medium text-foreground"
+                          >
+                            Intol.: {i}
+                          </span>
+                        ))}
+                        {m.conditions?.map((c) => (
+                          <span
+                            key={`c-${c}`}
+                            className="rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
                     {m.preferences && (
                       <p className="mt-1 text-sm text-foreground/80">
                         {m.preferences}
