@@ -15,22 +15,81 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Trash2, UserPlus, Users } from "lucide-react";
 import {
+  Allergen,
+  Condition,
+  Diet,
   FamilyMember,
+  Intolerance,
   Ration,
   Role,
   loadFamily,
   sanitizeInput,
   saveFamily,
 } from "@/lib/storage";
+import { MultiSelectChips } from "@/components/MultiSelectChips";
 
 const ROLES: Role[] = ["Adulto/a", "Niño/a", "Adolescente", "Mayor", "Otro"];
 const RATIONS: Ration[] = ["pequeña", "media", "grande"];
+
+const ALLERGENS: Allergen[] = [
+  "Gluten",
+  "Lactosa",
+  "Frutos secos",
+  "Cacahuete",
+  "Marisco",
+  "Pescado",
+  "Huevo",
+  "Soja",
+  "Sésamo",
+  "Mostaza",
+  "Apio",
+  "Sulfitos",
+];
+
+const INTOLERANCES: Intolerance[] = [
+  "Lactosa",
+  "Fructosa",
+  "Histamina",
+  "Sorbitol",
+  "FODMAP",
+  "Cafeína",
+];
+
+const CONDITIONS: Condition[] = [
+  "Diabetes",
+  "Hipertensión",
+  "Colesterol alto",
+  "Celiaquía",
+  "Enfermedad de Crohn",
+  "Síndrome intestino irritable",
+  "Reflujo",
+  "Anemia",
+];
+
+const DIETS: Diet[] = [
+  "Omnívora",
+  "Vegetariana",
+  "Vegana",
+  "Pescetariana",
+  "Flexitariana",
+  "Mediterránea",
+  "Keto",
+  "Baja en sodio",
+  "Baja en azúcar",
+  "Halal",
+  "Kosher",
+];
 
 const emptyForm = {
   name: "",
   role: "Adulto/a" as Role,
   ration: "media" as Ration,
   preferences: "",
+  age: "" as string,
+  allergens: [] as Allergen[],
+  intolerances: [] as Intolerance[],
+  conditions: [] as Condition[],
+  diets: ["Mediterránea"] as Diet[],
 };
 
 const Family = () => {
