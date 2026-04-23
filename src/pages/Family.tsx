@@ -15,22 +15,81 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Trash2, UserPlus, Users } from "lucide-react";
 import {
+  Allergen,
+  Condition,
+  Diet,
   FamilyMember,
+  Intolerance,
   Ration,
   Role,
   loadFamily,
   sanitizeInput,
   saveFamily,
 } from "@/lib/storage";
+import { MultiSelectChips } from "@/components/MultiSelectChips";
 
 const ROLES: Role[] = ["Adulto/a", "Niño/a", "Adolescente", "Mayor", "Otro"];
 const RATIONS: Ration[] = ["pequeña", "media", "grande"];
+
+const ALLERGENS: Allergen[] = [
+  "Gluten",
+  "Lactosa",
+  "Frutos secos",
+  "Cacahuete",
+  "Marisco",
+  "Pescado",
+  "Huevo",
+  "Soja",
+  "Sésamo",
+  "Mostaza",
+  "Apio",
+  "Sulfitos",
+];
+
+const INTOLERANCES: Intolerance[] = [
+  "Lactosa",
+  "Fructosa",
+  "Histamina",
+  "Sorbitol",
+  "FODMAP",
+  "Cafeína",
+];
+
+const CONDITIONS: Condition[] = [
+  "Diabetes",
+  "Hipertensión",
+  "Colesterol alto",
+  "Celiaquía",
+  "Enfermedad de Crohn",
+  "Síndrome intestino irritable",
+  "Reflujo",
+  "Anemia",
+];
+
+const DIETS: Diet[] = [
+  "Omnívora",
+  "Vegetariana",
+  "Vegana",
+  "Pescetariana",
+  "Flexitariana",
+  "Mediterránea",
+  "Keto",
+  "Baja en sodio",
+  "Baja en azúcar",
+  "Halal",
+  "Kosher",
+];
 
 const emptyForm = {
   name: "",
   role: "Adulto/a" as Role,
   ration: "media" as Ration,
   preferences: "",
+  age: "" as string,
+  allergens: [] as Allergen[],
+  intolerances: [] as Intolerance[],
+  conditions: [] as Condition[],
+  diets: ["Mediterránea"] as Diet[],
 };
 
 const Family = () => {
@@ -58,12 +117,26 @@ const Family = () => {
       toast.error("Indica un nombre válido");
       return;
     }
+    let age: number | undefined;
+    if (form.age.trim() !== "") {
+      const parsed = Number(form.age);
+      if (!Number.isFinite(parsed) || parsed < 0 || parsed > 120) {
+        toast.error("Edad inválida (0-120)");
+        return;
+      }
+      age = Math.floor(parsed);
+    }
     const newMember: FamilyMember = {
       id: crypto.randomUUID(),
       name,
       role: form.role,
       ration: form.ration,
       preferences: sanitizeInput(form.preferences, 140),
+      age,
+      allergens: form.allergens,
+      intolerances: form.intolerances,
+      conditions: form.conditions,
+      diets: form.diets,
     };
     setMembers((prev) => [...prev, newMember]);
     setForm(emptyForm);
@@ -151,6 +224,65 @@ const Family = () => {
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="age">Edad</Label>
+              <Input
+                id="age"
+                type="number"
+                inputMode="numeric"
+                min={0}
+                max={120}
+                value={form.age}
+                placeholder="Ej. 42"
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    age: e.target.value.replace(/[^0-9]/g, "").slice(0, 3),
+                  })
+                }
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Dieta especial</Label>
+              <MultiSelectChips
+                ariaLabel="Dietas"
+                options={DIETS}
+                value={form.diets}
+                onChange={(v) => setForm({ ...form, diets: v })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Alérgenos</Label>
+              <MultiSelectChips
+                ariaLabel="Alérgenos"
+                options={ALLERGENS}
+                value={form.allergens}
+                onChange={(v) => setForm({ ...form, allergens: v })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Intolerancias</Label>
+              <MultiSelectChips
+                ariaLabel="Intolerancias"
+                options={INTOLERANCES}
+                value={form.intolerances}
+                onChange={(v) => setForm({ ...form, intolerances: v })}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Condiciones médicas</Label>
+              <MultiSelectChips
+                ariaLabel="Condiciones"
+                options={CONDITIONS}
+                value={form.conditions}
+                onChange={(v) => setForm({ ...form, conditions: v })}
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="prefs">Preferencias o necesidades</Label>
               <Textarea
                 id="prefs"
@@ -224,8 +356,49 @@ const Family = () => {
                   <div>
                     <p className="font-semibold">{m.name}</p>
                     <p className="text-xs text-muted-foreground">
-                      {m.role} · ración {m.ration}
+                      {m.role}
+                      {typeof m.age === "number" ? ` · ${m.age} años` : ""}
+                      {` · ración ${m.ration}`}
                     </p>
+                    {(m.diets?.length ||
+                      m.allergens?.length ||
+                      m.intolerances?.length ||
+                      m.conditions?.length) ? (
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {m.diets?.map((d) => (
+                          <span
+                            key={`d-${d}`}
+                            className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary"
+                          >
+                            {d}
+                          </span>
+                        ))}
+                        {m.allergens?.map((a) => (
+                          <span
+                            key={`a-${a}`}
+                            className="rounded-full bg-destructive/10 px-2 py-0.5 text-[11px] font-medium text-destructive"
+                          >
+                            Alergia: {a}
+                          </span>
+                        ))}
+                        {m.intolerances?.map((i) => (
+                          <span
+                            key={`i-${i}`}
+                            className="rounded-full bg-accent/40 px-2 py-0.5 text-[11px] font-medium text-foreground"
+                          >
+                            Intol.: {i}
+                          </span>
+                        ))}
+                        {m.conditions?.map((c) => (
+                          <span
+                            key={`c-${c}`}
+                            className="rounded-full bg-secondary px-2 py-0.5 text-[11px] font-medium text-secondary-foreground"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                    ) : null}
                     {m.preferences && (
                       <p className="mt-1 text-sm text-foreground/80">
                         {m.preferences}

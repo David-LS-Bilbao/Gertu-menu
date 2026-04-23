@@ -1,12 +1,62 @@
 export type Role = "Adulto/a" | "Niño/a" | "Adolescente" | "Mayor" | "Otro";
 export type Ration = "pequeña" | "media" | "grande";
 
+export type Allergen =
+  | "Gluten"
+  | "Lactosa"
+  | "Frutos secos"
+  | "Cacahuete"
+  | "Marisco"
+  | "Pescado"
+  | "Huevo"
+  | "Soja"
+  | "Sésamo"
+  | "Mostaza"
+  | "Apio"
+  | "Sulfitos";
+
+export type Intolerance =
+  | "Lactosa"
+  | "Fructosa"
+  | "Histamina"
+  | "Sorbitol"
+  | "FODMAP"
+  | "Cafeína";
+
+export type Condition =
+  | "Diabetes"
+  | "Hipertensión"
+  | "Colesterol alto"
+  | "Celiaquía"
+  | "Enfermedad de Crohn"
+  | "Síndrome intestino irritable"
+  | "Reflujo"
+  | "Anemia";
+
+export type Diet =
+  | "Omnívora"
+  | "Vegetariana"
+  | "Vegana"
+  | "Pescetariana"
+  | "Flexitariana"
+  | "Mediterránea"
+  | "Keto"
+  | "Baja en sodio"
+  | "Baja en azúcar"
+  | "Halal"
+  | "Kosher";
+
 export interface FamilyMember {
   id: string;
   name: string;
   role: Role;
   ration: Ration;
   preferences: string;
+  age?: number;
+  allergens: Allergen[];
+  intolerances: Intolerance[];
+  conditions: Condition[];
+  diets: Diet[];
 }
 
 const FAMILY_KEY = "est_family_members_v1";
