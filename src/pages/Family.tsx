@@ -117,12 +117,26 @@ const Family = () => {
       toast.error("Indica un nombre válido");
       return;
     }
+    let age: number | undefined;
+    if (form.age.trim() !== "") {
+      const parsed = Number(form.age);
+      if (!Number.isFinite(parsed) || parsed < 0 || parsed > 120) {
+        toast.error("Edad inválida (0-120)");
+        return;
+      }
+      age = Math.floor(parsed);
+    }
     const newMember: FamilyMember = {
       id: crypto.randomUUID(),
       name,
       role: form.role,
       ration: form.ration,
       preferences: sanitizeInput(form.preferences, 140),
+      age,
+      allergens: form.allergens,
+      intolerances: form.intolerances,
+      conditions: form.conditions,
+      diets: form.diets,
     };
     setMembers((prev) => [...prev, newMember]);
     setForm(emptyForm);
