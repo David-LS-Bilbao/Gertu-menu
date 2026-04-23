@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/SiteHeader";
-import { Leaf, MapPin, Sprout, Users } from "lucide-react";
+import { Leaf, MapPin, Sprout, Trophy, Users } from "lucide-react";
 import heroImg from "@/assets/hero-family.jpg";
 
 const Landing = () => {
@@ -18,6 +18,12 @@ const Landing = () => {
               Menús familiares sostenibles,
               <span className="text-earth"> pensados desde casa</span>
             </h1>
+            <p className="max-w-xl font-serif text-2xl italic text-earth/90">
+              Calidad local, salud familiar.
+              <span className="block text-base not-italic text-muted-foreground">
+                Porque la sostenibilidad empieza en tu mesa.
+              </span>
+            </p>
             <p className="max-w-xl text-lg text-muted-foreground">
               Crea menús adaptados a las necesidades de tu familia usando
               productos locales, de temporada y con menos desperdicio.
@@ -34,6 +40,16 @@ const Landing = () => {
                 className="rounded-full border-2"
               >
                 <Link to="/menu">Ver opciones de configuración</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="ghost"
+                className="rounded-full"
+              >
+                <Link to="/puntos">
+                  <Trophy className="mr-2 h-4 w-4" /> Puntos en familia
+                </Link>
               </Button>
             </div>
             <dl className="grid grid-cols-3 gap-4 pt-6">

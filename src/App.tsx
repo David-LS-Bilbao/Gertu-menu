@@ -7,6 +7,7 @@ import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Family from "./pages/Family.tsx";
 import MenuConfig from "./pages/MenuConfig.tsx";
+import Rewards from "./pages/Rewards.tsx";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/familia" element={<Family />} />
           <Route path="/menu" element={<MenuConfig />} />
+          <Route path="/puntos" element={<Rewards />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

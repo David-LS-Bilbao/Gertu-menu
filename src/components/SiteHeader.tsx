@@ -5,6 +5,7 @@ const links = [
   { to: "/", label: "Inicio" },
   { to: "/familia", label: "Mi familia" },
   { to: "/menu", label: "Configurar menú" },
+  { to: "/puntos", label: "Puntos" },
 ];
 
 export const SiteHeader = () => {
