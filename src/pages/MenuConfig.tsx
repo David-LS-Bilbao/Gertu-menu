@@ -3,6 +3,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, ExternalLink, ShoppingBasket, UtensilsCrossed } from "lucide-react";
 import { loadOption, saveOption } from "@/lib/storage";
+import { TraceAndLearnWidget } from "@/components/TraceAndLearnWidget";
+import { toast } from "sonner";
 
 const BBK_AZOKA = "https://eup.bbk.eus/es-ES/azoka/comprar";
 
@@ -158,6 +160,17 @@ const MenuConfig = () => {
                       ))}
                     </tbody>
                   </table>
+                </div>
+
+                <div className="mt-8">
+                  <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-earth">
+                    En la mesa · Hoy coméis
+                  </p>
+                  <TraceAndLearnWidget
+                    onViewChain={() =>
+                      toast("Próximamente: trazabilidad on-chain con EuskoTrace")
+                    }
+                  />
                 </div>
               </div>
             )}
