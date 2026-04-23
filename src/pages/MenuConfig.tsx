@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, ExternalLink, ShoppingBasket, UtensilsCrossed } from "lucide-react";
-import { loadOption, saveOption } from "@/lib/storage";
+import { loadFamily, loadOption, saveOption, FamilyMember } from "@/lib/storage";
 import { TraceAndLearnWidget } from "@/components/TraceAndLearnWidget";
 import { toast } from "sonner";
+import { MenuConfigurator } from "@/components/MenuConfigurator";
 
 const BBK_AZOKA = "https://eup.bbk.eus/es-ES/azoka/comprar";
 
@@ -38,19 +39,13 @@ const OPTIONS = [
   },
 ];
 
-const SAMPLE_MENU = [
-  { day: "Lunes", lunch: "Crema de calabaza de Markina con aceite de Bizkaia", dinner: "Tortilla de pimiento de Gernika" },
-  { day: "Martes", lunch: "Alubias rojas de Tolosa con verduras de temporada", dinner: "Merluza al horno con patata de Álava" },
-  { day: "Miércoles", lunch: "Ensalada de tomate de huerta y queso Idiazabal", dinner: "Revuelto de perretxikos" },
-  { day: "Jueves", lunch: "Garbanzos guisados con acelgas locales", dinner: "Bonito del Cantábrico a la plancha" },
-  { day: "Viernes", lunch: "Marmitako tradicional", dinner: "Pisto de verduras de la huerta vasca" },
-];
-
 const MenuConfig = () => {
   const [selected, setSelected] = useState<number | null>(null);
+  const [family, setFamily] = useState<FamilyMember[]>([]);
 
   useEffect(() => {
     setSelected(loadOption());
+    setFamily(loadFamily());
   }, []);
 
   const choose = (id: number) => {
