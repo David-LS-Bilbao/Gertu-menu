@@ -3,9 +3,12 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
+const productionRepo = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "Geru-menu";
+const productionBase = `/${productionRepo}/`;
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: mode === "production" ? "/local-plate-family/" : "/",
+  base: mode === "production" ? productionBase : "/",
   server: {
     host: "::",
     port: 8080,
