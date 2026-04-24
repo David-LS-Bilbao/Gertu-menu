@@ -87,16 +87,18 @@ export function generateMenu(
   // Aggregate family constraints
   const allergens = new Set<string>();
   const intolerances = new Set<string>();
+  const conditions = new Set<string>();
   const diets = new Set<string>();
   family.forEach((m) => {
     m.allergens?.forEach((a) => allergens.add(a.toLowerCase()));
     m.intolerances?.forEach((i) => intolerances.add(i.toLowerCase()));
+    m.conditions?.forEach((c) => conditions.add(c.toLowerCase()));
     m.diets?.forEach((d) => diets.add(d.toLowerCase()));
   });
 
   const wantsVegan = diets.has("vegana");
   const wantsVegetarian = wantsVegan || diets.has("vegetariana");
-  const noGluten = allergens.has("gluten") || intolerances.has("celiaquía");
+  const noGluten = allergens.has("gluten") || intolerances.has("celiaquía") || conditions.has("celiaquía");
   const noLactose = allergens.has("lactosa") || intolerances.has("lactosa");
   const noSeafood = allergens.has("marisco") || allergens.has("pescado");
   const excludeText = config.excludeIngredients.map((s) => s.toLowerCase());
