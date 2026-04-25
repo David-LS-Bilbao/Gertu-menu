@@ -153,15 +153,15 @@ Esta parte funciona como concepto de producto y como posible línea futura de ev
 
 | Nombre | Área | contact |
 |---|---|---|
-|Rubens |Team Lead|   |
+|Rubens |Team Lead|   https://www.linkedin.com/in/rubensbl/
 | Edy | Full Stack |    |
 | David | Full Stack | https://www.linkedin.com/in/david-lopez-sotelo-256a70154/?skipRedirect=true
-| Marcos | Full Stack |
+| Marcos | Full Stack | https://www.linkedin.com/in/marcos-mauricio-salinas-delgado-b1b47a212/
 | Sheila | Ciberseguridad |
 | Andoni | Ciberseguridad |
 | Anghelo | Ciberseguridad |
 | Mikel | Data Science | https://www.linkedin.com/in/mikelanibarroortega?utm_source=share_via&utm_content=profile&utm_medium=member_ios
-| Danillo | Data Science | 
+| Danillo | Data Science | https://www.linkedin.com/in/danillo-souza-68040a15b/
 | Juancar | Data Science | https://www.linkedin.com/in/juancarlospinamartinez 
 | Aitziber | Marketing |
 | Eider | Marketing |https://www.linkedin.com/in/eider-fano-033b47276?utm_source=share_via&utm_content=profile&utm_medium=member_ios
